@@ -3,103 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCD Master Search</title>
+    <title>LCD Master Search v3</title>
     <style>
+        /* 1. RESET & BASE DESIGN */
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #2c3e50 url('bg.jpg') no-repeat center center fixed; 
+            background-size: cover; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* 2. FLEX WRAPPER FOR SIDEBAR + CONTENT */
+        .main-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* 3. SIDEBAR STYLING */
+        .sidebar {
+            width: 250px;
+            background: #111111; /* Solid dark black for visibility */
+            color: white;
+            padding: 30px 15px;
+            flex-shrink: 0; /* Prevents sidebar from squishing */
+            border-right: 2px solid #1a73e8;
+        }
+
+        .sidebar h2 { color: #1a73e8; margin-bottom: 5px; }
+        .sidebar p { font-size: 12px; color: #777; margin-bottom: 25px; }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            padding: 12px;
+            text-decoration: none;
+            background: #222;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover { background: #1a73e8; }
+
+        /* 4. MAIN CONTENT AREA */
+        .content-area {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 900px; 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            height: fit-content;
+        }
+
+        /* Search & Table Styles */
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { color: #1a73e8; margin: 0; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        #searchBar { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
+        #clearBtn { padding: 0 20px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-    body { 
-        font-family: 'Segoe UI', sans-serif; 
-        /* 1. Added a fallback color #2c3e50 in case the image is missing */
-        background: #2c3e50 url('bg.jpg') no-repeat center center fixed; 
-        background-size: cover; 
-        padding: 20px; 
-        margin: 0;
-        min-height: 100vh;
-    }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; background: #f4f4f4; color: #333; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        .model-cell { font-weight: bold; color: #1a73e8; }
+        .lcd-thumb { width: 70px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        .lcd-thumb:hover { transform: scale(1.1); }
 
-    .container { 
-        max-width: 900px; 
-        margin: 0 auto; 
-        /* 2. Made background slightly transparent (0.9) to see the image behind */
-        background: rgba(255, 255, 255, 0.92); 
-        /* 3. This creates the 'Glass' blur effect for a modern look */
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        padding: 25px; 
-        border-radius: 15px; 
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-    }
-
-    .header h1 { margin: 0; color: #1a73e8; }
-    
-    .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-    
-    #searchBar { 
-        flex: 1; padding: 16px; font-size: 18px; 
-        border: 2px solid #ddd; border-radius: 12px; outline: none; 
-    }
-    
-    #clearBtn { 
-        padding: 0 20px; background: #1a73e8; color: white; 
-        border: none; border-radius: 12px; cursor: pointer; font-weight: bold; 
-    }
-
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { text-align: left; padding: 15px; background: #f8f9fa; color: #5f6368; }
-    td { padding: 15px; border-bottom: 1px solid #eee; }
-    
-    .model-cell { font-weight: bold; color: #1a73e8; }
-    .lcd-thumb { width: 80px; height: auto; border-radius: 5px; border: 1px solid #ddd; }
-        </body>
-</style>
+        /* 5. MOBILE RESPONSIVE - Sidebar moves to top */
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; }
+            .content-area { padding: 10px; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>LCD Compatibility checker by <a href = "https://www.facebook.com/albertelena2514">technohacks</h1> </a>
-        <p>Search any Model or Part Number</p>
-    </div>
-    
-    <div class="controls">
-        <input type="text" id="searchBar" placeholder="Type to search (e.g., C21, Samsung A51...)">
-        <button id="clearBtn">Clear</button>
+<div class="main-wrapper">
+    <div class="sidebar">
+        <h2>TechnoHacks</h2>
+        <p>Repair Database v3.0</p>
+        
+        <a href="https://www.facebook.com/albertelena2514" target="_blank">👤 Facebook Page</a>
+        <a href="#" target="_blank">🛒 TikTok Shop</a>
+        <a href="#" target="_blank">📦 Shopee Affiliate</a>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Photo</th> 
-                <th>Target Model</th>
-                <th>Compatible With</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
+    <div class="content-area">
+        <div class="container">
+            <div class="header">
+                <h1>LCD Master Search</h1>
+                <p>Find compatible screens instantly</p>
+            </div>
+            
+            <div class="controls">
+                <input type="text" id="searchBar" placeholder="Search model...">
+                <button id="clearBtn">Clear</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Photo</th> 
+                        <th>Model</th>
+                        <th>Compatible With</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
-    // FULL DATA DIRECTLY IN HTML (Best for GitHub Pages)
     const lcdData = [
-        { model: "Realme C21", compat: "Realme C21Y, C25, C25s, Oppo A16, Oppo A16s", image: "realmec21.2.png", href:"https://www.youtube.com/" },
-        { model: "Realme C11 (2021)", compat: "Realme C20, C11 2021, Narzo 50i, Oppo A15, A15s", image: "realmec11-2021.png" },
-        { model: "Realme 5", compat: "Realme 5i, 5s, 6i, C3, Narzo 10, Narzo 10A", image: "realme5.png" },
-        { model: "Redmi Note 10 4G", compat: "Redmi Note 10S, Poco M5s (AMOLED versions)", image: "redminote104g.png" },
-        { model: "Redmi 9", compat: "Redmi 9 Prime, Poco M2", image: "redmi9.png" },
-        { model: "Redmi 9A", compat: "Redmi 9C, Redmi 10A, Poco C3, Poco C31", image: "redmi9a.png" },
-        { model: "Redmi Note 8", compat: "Redmi Note 8 (2019/2021 versions usually match)", image: "redminote8.png" },
-        { model: "Xiaomi Mi A3", compat: "Xiaomi CC9e", image: "mia3.png" },
-        { model: "Samsung Galaxy A51", compat: "SM-A515F, SM-A515G, SM-A515U (Check Frame/No Frame)", image: "sma514g.png" },
-        { model: "Samsung Galaxy A10s", compat: "SM-A107F, SM-A107M", image: "samsunga10s.png" },
-        { model: "Samsung Galaxy A12", compat: "A12 Nacho, M12, A125F, A127F", image: "samsunga12.png" },
-        { model: "Samsung Galaxy A02", compat: "Samsung M02, A022F", image: "samsunga02.png" },
-        { model: "Samsung Galaxy J6 Plus", compat: "J4 Plus, J415, J610", image: "" },
-        { model: "Vivo Y20", compat: "Y20i, Y20s, Y12s, Y15s, Y21 (2021), Y30, Y50", image: "" },
-        { model: "Vivo Y91", compat: "Y93, Y95, Y91i, Y91c", image: "" },
-        { model: "Infinix Hot 10", compat: "Infinix Note 7 Lite, X682, X682B", image: "" },
-        { model: "Infinix Smart 5", compat: "Tecno Spark 6 Go, Spark 5 Air", image: "" },
-        { model: "Tecno Camon 15", compat: "Infinix S5 Pro", image: "" },
-        { model: "Nokia C21 Plus", compat: "TA-1433, TA-1431, TA-1424", image: "" },
-        { model: "Nokia 2.3", compat: "Nokia 2.2 (Some variants), TA-1206", image: "" }
+        { model: "Realme C21", compat: "Realme C21Y, C25, C25s, Oppo A16", image: "realmec21.2.png", link: "https://shopee.ph/" },
+        { model: "Realme C11 (2021)", compat: "Realme C20, C11 2021, Narzo 50i, Oppo A15", image: "realmec11-2021.png", link: "#" },
+        { model: "Realme 5", compat: "Realme 5i, 5s, 6i, C3, Narzo 10", image: "realme5.png", link: "#" },
+        { model: "Redmi Note 10 4G", compat: "Note 10S, Poco M5s", image: "redminote104g.png", link: "#" },
+        { model: "Redmi 9", compat: "Redmi 9 Prime, Poco M2", image: "redmi9.png", link: "#" },
+        { model: "Samsung Galaxy A51", compat: "SM-A515F, SM-A515G", image: "sma514g.png", link: "#" },
+        { model: "Samsung Galaxy A12", compat: "A12 Nacho, M12, A125F", image: "samsunga12.png", link: "#" }
+        // ... (Add your other items here)
     ];
 
     const tableBody = document.getElementById('tableBody');
@@ -108,12 +146,16 @@
 
     function renderTable(data) {
         if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No matches found.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px;">No matches found.</td></tr>';
             return;
         }
         tableBody.innerHTML = data.map(item => `
             <tr>
-                <td><img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" class="lcd-thumb" onclick="window.open(this.src)"></td>
+                <td>
+                    <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" 
+                         class="lcd-thumb" 
+                         onclick="window.open('${item.link || '#'}', '_blank')">
+                </td>
                 <td class="model-cell">${item.model}</td>
                 <td>${item.compat}</td>
             </tr>
@@ -132,27 +174,10 @@
     clearBtn.addEventListener('click', () => {
         searchBar.value = '';
         renderTable(lcdData);
-        searchBar.focus();
     });
 
     renderTable(lcdData);
 </script>
+
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
