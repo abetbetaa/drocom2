@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K9JLQ5V5');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCD Master Search </title>
+    <title>LCD Master Search</title>
     <style>
-        /* 1. RESET & BASE DESIGN */
+        /* Your CSS stays exactly the same */
         * { box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', sans-serif; 
@@ -15,122 +20,42 @@
             padding: 0;
             min-height: 100vh;
         }
-
-        /* 2. FLEX WRAPPER FOR SIDEBAR + CONTENT */
-        .main-wrapper {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
-
-        /* 3. SIDEBAR STYLING */
-        .sidebar {
-            width: 250px;
-            background: #111111; /* Solid dark black for visibility */
-            color: white;
-            padding: 30px 15px;
-            flex-shrink: 0; /* Prevents sidebar from squishing */
-            border-right: 2px solid #1a73e8;
-        }
-
+        .main-wrapper { display: flex; width: 100%; min-height: 100vh; }
+        .sidebar { width: 250px; background: #111111; color: white; padding: 30px 15px; flex-shrink: 0; border-right: 2px solid #1a73e8; }
         .sidebar h2 { color: #1a73e8; margin-bottom: 5px; }
         .sidebar p { font-size: 12px; color: #777; margin-bottom: 25px; }
-
-        .sidebar a {
-            display: block;
-            color: #fff;
-            padding: 12px;
-            text-decoration: none;
-            background: #222;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
+        .sidebar a { display: block; color: #fff; padding: 12px; text-decoration: none; background: #222; margin-bottom: 10px; border-radius: 8px; font-size: 14px; transition: 0.3s; }
         .sidebar a:hover { background: #1a73e8; }
-
-        /* 4. MAIN CONTENT AREA */
-        .content-area {
-            flex-grow: 1;
-            padding: 30px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container { 
-            width: 100%;
-            max-width: 900px; 
-            background: rgba(255, 255, 255, 0.95); 
-            padding: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            height: fit-content;
-        }
-
-        /* Search & Table Styles */
+        .content-area { flex-grow: 1; padding: 30px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 900px; background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); height: fit-content; }
         .header { text-align: center; margin-bottom: 20px; }
         .header h1 { color: #1a73e8; margin: 0; }
         .controls { display: flex; gap: 10px; margin-bottom: 20px; }
         #searchBar { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
         #clearBtn { padding: 0 20px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        
         table { width: 100%; border-collapse: collapse; }
         th { text-align: left; padding: 12px; background: #f4f4f4; color: #333; }
         td { padding: 12px; border-bottom: 1px solid #eee; }
         .model-cell { font-weight: bold; color: #1a73e8; }
         .lcd-thumb { width: 70px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
         .lcd-thumb:hover { transform: scale(1.1); }
-
-        /* 5. MOBILE RESPONSIVE - Sidebar moves to top */
-        @media (max-width: 768px) {
-            .main-wrapper { flex-direction: column; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; }
-            .content-area { padding: 10px; }
-        }
-
-        /* Label for models with NO compatibility */
-.no-compat-msg {
-    color: #888;
-    font-style: italic;
-    font-size: 0.9rem;
-    display: block;
-    background: #fdf2f2;
-    padding: 8px;
-    border-radius: 5px;
-    border-left: 3px solid #f44336; /* Red warning line */
-}
-
-/* Red badge appearing over the image for unique models */
-.unique-tag-img {
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #f44336;
-    color: white;
-    font-size: 9px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.img-container {
-    position: relative; /* This keeps the badge inside the image box */
-    display: inline-block;
-}
+        @media (max-width: 768px) { .main-wrapper { flex-direction: column; } .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; } .content-area { padding: 10px; } }
+        .no-compat-msg { color: #888; font-style: italic; font-size: 0.9rem; display: block; background: #fdf2f2; padding: 8px; border-radius: 5px; border-left: 3px solid #f44336; }
+        .unique-tag-img { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: #f44336; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
+        .img-container { position: relative; display: inline-block; }
+        /* Add this style for the buy hint */
+        .buy-hint { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: #1a73e8; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
     </style>
 </head>
 <body>
-
-<div class="main-wrapper">
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9JLQ5V5"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="main-wrapper">
     <div class="sidebar">
         <h2>TechnoHacks</h2>
         <p>Repair Database v3.0</p>
-        
         <a href="https://www.facebook.com/albertelena2514" target="_blank">👤 Facebook Page</a>
-        <a href="shop.html" target="#">🛒 Order LCD here</a>
+        <a href="shop.html">🛒 Order LCD here</a>
         <a href="https://www.youtube.com/@technohacks2514" target="_blank">▶️ Watch Here </a>
     </div>
 
@@ -169,41 +94,39 @@
         { model: "Redmi 9", compat: "Redmi 9 Prime, Poco M2", image: "redmi9.png", link: "#" },
         { model: "Samsung Galaxy A51", compat: "", image: "sma514g.png", link: "#" },
         { model: "Samsung Galaxy A12", compat: "A12 Nacho, M12, A125F", image: "samsunga12.png", link: "#" },
-        { model: "Samsung Galaxy a02", compat: "Samsung M02, A022F", image: "samsunga02.png", link: "#" },
-        // ... (Add your other items here)
+        { model: "Samsung Galaxy a02", compat: "Samsung M02, A022F", image: "samsunga02.png", link: "#" }
     ];
 
     const tableBody = document.getElementById('tableBody');
     const searchBar = document.getElementById('searchBar');
     const clearBtn = document.getElementById('clearBtn');
 
-   function renderTable(data) {
-    if (data.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No matches found.</td></tr>';
-        return;
+    function renderTable(data) {
+        if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No matches found.</td></tr>';
+            return;
+        }
+        tableBody.innerHTML = data.map(item => {
+            const isUnique = !item.compat || item.compat.trim() === "";
+            return `
+                <tr>
+                    <td>
+                        <div class="img-container" onclick="window.open('${item.link || item.image || '#'}', '_blank')">
+                            <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" class="lcd-thumb">
+                            ${isUnique ? '<span class="unique-tag-img">UNIQUE UNIT</span>' : '<span class="buy-hint">🛒 BUY NOW</span>'}
+                        </div>
+                    </td>
+                    <td class="model-cell">${item.model}</td>
+                    <td>
+                        ${isUnique 
+                            ? '<span class="no-compat-msg">⚠️ No compatibility with other units (Solo Model)</span>' 
+                            : item.compat}
+                    </td>
+                </tr>
+            `;
+        }).join('');
     }
-    tableBody.innerHTML = data.map(item => {
-        // Check if compatibility is empty or missing
-        const isUnique = !item.compat || item.compat.trim() === "";
-        
-        return `
-            <tr>
-                <td>
-                    <div class="img-container" onclick="window.open('${item.link || item.image || '#'}', '_blank')">
-                        <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" class="lcd-thumb">
-                        ${isUnique ? '<span class="unique-tag-img">UNIQUE UNIT</span>' : '<span class="buy-hint">🛒 BUY NOW</span>'}
-                    </div>
-                </td>
-                <td class="model-cell">${item.model}</td>
-                <td>
-                    ${isUnique 
-                        ? '<span class="no-compat-msg">⚠️ No compatibility with other units (Solo Model)</span>' 
-                        : item.compat}
-                </td>
-            </tr>
-        `;
-    }).join('');
-}
+
     searchBar.addEventListener('input', () => {
         const query = searchBar.value.toLowerCase().trim();
         const filtered = lcdData.filter(item => 
@@ -223,9 +146,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
