@@ -21,13 +21,14 @@
             min-height: 100vh;
         }
 
-        /* Essential Layout Fix */
+        /* Layout Wrapper */
         .main-wrapper {
             display: flex;
             width: 100%;
             min-height: 100vh;
         }
 
+        /* Sidebar - Sticky on Desktop */
         .sidebar {
             width: 260px;
             background: #111111;
@@ -57,12 +58,14 @@
 
         .sidebar a:hover { background: #1a73e8; transform: translateX(5px); }
 
+        /* Content Area */
         .content-area {
             flex-grow: 1;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.2); /* Adds contrast for the background image */
+            background: rgba(0, 0, 0, 0.2);
+            overflow-x: hidden;
         }
 
         .container { 
@@ -88,9 +91,7 @@
             border: 2px solid #eee; 
             outline: none; 
             font-size: 16px;
-            transition: border 0.3s;
         }
-        #searchBar:focus { border-color: #1a73e8; }
 
         #clearBtn { 
             padding: 0 25px; 
@@ -100,16 +101,20 @@
             border-radius: 12px; 
             cursor: pointer; 
             font-weight: bold;
-            transition: background 0.3s;
         }
-        #clearBtn:hover { background: #1557b0; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; padding: 15px; background: #f8f9fa; color: #333; font-weight: 600; border-bottom: 2px solid #eee; }
+        /* MOBILE FIX: Table Container */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 500px; } 
+        th { text-align: left; padding: 15px; background: #f8f9fa; border-bottom: 2px solid #eee; }
         td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
         
         .model-cell { font-weight: bold; color: #1a73e8; font-size: 16px; }
-        
         .img-container { position: relative; display: inline-block; width: 85px; }
         .lcd-thumb { width: 100%; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; }
 
@@ -126,12 +131,24 @@
         }
         .unique-tag-img { background: #d93025; }
 
-        /* Responsive */
+        /* --- MOBILE RESPONSIVE RULES --- */
         @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 3px solid #1a73e8; }
-            .content-area { padding: 15px; }
-            .container { padding: 15px; }
+            .sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: relative; 
+                border-right: none; 
+                border-bottom: 3px solid #1a73e8; 
+                padding: 20px;
+            }
+            .sidebar h2 { font-size: 20px; }
+            .sidebar p { margin-bottom: 15px; }
+            .content-area { padding: 10px; }
+            .container { padding: 15px; border-radius: 10px; }
+            .controls { flex-direction: column; } /* Search and button stack */
+            #clearBtn { padding: 15px; }
+            .header h1 { font-size: 24px; }
         }
     </style>
 </head>
@@ -160,16 +177,18 @@
                     <button id="clearBtn">Clear</button>
                 </div>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Photo</th> 
-                            <th>Model</th>
-                            <th>Compatible With</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Photo</th> 
+                                <th>Model</th>
+                                <th>Compatible With</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
