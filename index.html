@@ -21,14 +21,12 @@
             min-height: 100vh;
         }
 
-        /* Layout Wrapper */
         .main-wrapper {
             display: flex;
             width: 100%;
             min-height: 100vh;
         }
 
-        /* Sidebar - Sticky on Desktop */
         .sidebar {
             width: 260px;
             background: #111111;
@@ -58,7 +56,6 @@
 
         .sidebar a:hover { background: #1a73e8; transform: translateX(5px); }
 
-        /* Content Area */
         .content-area {
             flex-grow: 1;
             padding: 40px 20px;
@@ -82,7 +79,13 @@
         .header h1 { color: #1a73e8; margin: 0; font-size: 32px; }
         .header p { color: #555; font-size: 16px; }
 
-        .controls { display: flex; gap: 12px; margin-bottom: 25px; }
+        /* Controls: Flex-nowrap keeps button on the side */
+        .controls { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 25px; 
+            width: 100%;
+        }
         
         #searchBar { 
             flex: 1; 
@@ -91,19 +94,20 @@
             border: 2px solid #eee; 
             outline: none; 
             font-size: 16px;
+            min-width: 0; /* Important for flex child shrink */
         }
 
         #clearBtn { 
-            padding: 0 25px; 
+            padding: 0 20px; 
             background: #1a73e8; 
             color: white; 
             border: none; 
             border-radius: 12px; 
             cursor: pointer; 
             font-weight: bold;
+            white-space: nowrap; /* Prevents text from breaking */
         }
         
-        /* MOBILE FIX: Table Container */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -131,7 +135,7 @@
         }
         .unique-tag-img { background: #d93025; }
 
-        /* --- MOBILE RESPONSIVE RULES --- */
+        /* MOBILE FIXES */
         @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
             .sidebar { 
@@ -146,8 +150,11 @@
             .sidebar p { margin-bottom: 15px; }
             .content-area { padding: 10px; }
             .container { padding: 15px; border-radius: 10px; }
-            .controls { flex-direction: column; } /* Search and button stack */
-            #clearBtn { padding: 15px; }
+            
+            /* Keeping button on side but slightly smaller padding */
+            #searchBar { padding: 12px; }
+            #clearBtn { padding: 0 15px; font-size: 14px; }
+            
             .header h1 { font-size: 24px; }
         }
     </style>
@@ -173,7 +180,7 @@
                 </div>
                 
                 <div class="controls">
-                    <input type="text" id="searchBar" placeholder="Search phone model (e.g. Realme C21)...">
+                    <input type="text" id="searchBar" placeholder="Search model...">
                     <button id="clearBtn">Clear</button>
                 </div>
 
@@ -211,7 +218,7 @@
 
     function renderTable(data) {
         if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#777; font-style:italic;">No matches found for your search.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#777; font-style:italic;">No matches found.</td></tr>';
             return;
         }
         tableBody.innerHTML = data.map(item => {
@@ -227,7 +234,7 @@
                     <td class="model-cell">${item.model}</td>
                     <td>
                         ${isUnique 
-                            ? '<span style="color:#d93025; font-size:13px; font-weight:500;">⚠️ Solo Model (No common compatibility)</span>' 
+                            ? '<span style="color:#d93025; font-size:13px; font-weight:500;">⚠️ Solo Model</span>' 
                             : '<span style="color:#444; line-height:1.4;">' + item.compat + '</span>'}
                     </td>
                 </tr>
