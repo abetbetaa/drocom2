@@ -58,31 +58,37 @@
         th { text-align: left; background: #f8f9fa; font-size: 14px; color: #333; }
         .model-cell { font-weight: bold; color: #1a73e8; font-size: 14px; }
 
-        /* --- ENHANCED POP-OUT ZOOM --- */
+        /* --- HALF-SCREEN POP-OUT ZOOM --- */
         .img-container { 
             width: 70px; height: 90px; position: relative; cursor: pointer;
         }
 
         .lcd-thumb { 
             width: 100%; height: 100%; object-fit: cover; border-radius: 5px; 
-            border: 1px solid #ddd; transition: all 0.3s ease;
+            border: 1px solid #ddd; transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Pop-out Effect on Laptop */
+        /* Logic for Laptop Hover */
         @media (min-width: 851px) {
             .img-container:hover .lcd-thumb { 
-                position: fixed; /* Pops out of the table */
-                top: 50%; left: 50%;
-                transform: translate(-50%, -50%) scale(5); /* Zooms 5x larger to center of screen */
+                position: fixed; 
+                top: 50%; 
+                left: 55%; /* Shifted slightly right to not cover sidebar */
+                transform: translate(-50%, -50%); 
+                width: 45vh; /* This makes it roughly half the screen height */
+                height: auto;
+                max-width: 50vw; /* This makes it roughly half the screen width */
                 z-index: 9999;
-                box-shadow: 0 0 50px rgba(0,0,0,0.8);
-                border: 2px solid white;
-                height: auto; width: 150px; /* Large View Size */
+                box-shadow: 0 0 100px rgba(0,0,0,0.9);
+                border: 4px solid white;
+                object-fit: contain;
+                background: white;
             }
-            /* Darkens background when hovering image */
-            .img-container:hover::after {
-                content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-                background: rgba(0,0,0,0.7); z-index: 9998; pointer-events: none;
+            /* Overlay to dim the background */
+            .img-container:hover::before {
+                content: ""; position: fixed; top: 0; left: 0; 
+                width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); 
+                z-index: 9998; pointer-events: none;
             }
         }
 
