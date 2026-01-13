@@ -88,6 +88,38 @@
             .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; }
             .content-area { padding: 10px; }
         }
+
+        /* Label for models with NO compatibility */
+.no-compat-msg {
+    color: #888;
+    font-style: italic;
+    font-size: 0.9rem;
+    display: block;
+    background: #fdf2f2;
+    padding: 8px;
+    border-radius: 5px;
+    border-left: 3px solid #f44336; /* Red warning line */
+}
+
+/* Red badge appearing over the image for unique models */
+.unique-tag-img {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f44336;
+    color: white;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.img-container {
+    position: relative; /* This keeps the badge inside the image box */
+    display: inline-block;
+}
     </style>
 </head>
 <body>
@@ -137,6 +169,7 @@
         { model: "Redmi 9", compat: "Redmi 9 Prime, Poco M2", image: "redmi9.png", link: "#" },
         { model: "Samsung Galaxy A51", compat: "SM-A515F, SM-A515G", image: "sma514g.png", link: "#" },
         { model: "Samsung Galaxy A12", compat: "A12 Nacho, M12, A125F", image: "samsunga12.png", link: "#" }
+        { model: "Samsung Galaxy a02", compat: "Samsung M02, A022F", image: "samsunga02.png", link: "#" }
         // ... (Add your other items here)
     ];
 
@@ -144,24 +177,33 @@
     const searchBar = document.getElementById('searchBar');
     const clearBtn = document.getElementById('clearBtn');
 
-    function renderTable(data) {
-        if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px;">No matches found.</td></tr>';
-            return;
-        }
-        tableBody.innerHTML = data.map(item => `
+   function renderTable(data) {
+    if (data.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No matches found.</td></tr>';
+        return;
+    }
+    tableBody.innerHTML = data.map(item => {
+        // Check if compatibility is empty or missing
+        const isUnique = !item.compat || item.compat.trim() === "";
+        
+        return `
             <tr>
                 <td>
-                    <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" 
-                         class="lcd-thumb" 
-                         onclick="window.open('${item.link || '#'}', '_blank')">
+                    <div class="img-container" onclick="window.open('${item.link || item.image || '#'}', '_blank')">
+                        <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" class="lcd-thumb">
+                        ${isUnique ? '<span class="unique-tag-img">UNIQUE UNIT</span>' : '<span class="buy-hint">🛒 BUY NOW</span>'}
+                    </div>
                 </td>
                 <td class="model-cell">${item.model}</td>
-                <td>${item.compat}</td>
+                <td>
+                    ${isUnique 
+                        ? '<span class="no-compat-msg">⚠️ No compatibility with other units (Solo Model)</span>' 
+                        : item.compat}
+                </td>
             </tr>
-        `).join('');
-    }
-
+        `;
+    }).join('');
+}
     searchBar.addEventListener('input', () => {
         const query = searchBar.value.toLowerCase().trim();
         const filtered = lcdData.filter(item => 
@@ -181,6 +223,7 @@
 
 </body>
 </html>
+
 
 
 
