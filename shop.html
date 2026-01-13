@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechnoHacks Mobile Store</title>
+    <style>
+        :root {
+            --primary-color: #ff0050; /* TikTok Pink */
+            --secondary-color: #25f4ee; /* TikTok Cyan */
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            padding: 0; 
+            color: #333;
+        }
+
+        /* Store Header */
+        .store-header {
+            background: #121212;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        .store-header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
+        .store-header p { opacity: 0.8; margin-top: 10px; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+        /* Modern Search Bar */
+        .search-container {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            margin-bottom: 30px;
+        }
+
+        #shopSearch {
+            width: 100%;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            outline: none;
+            transition: 0.3s;
+        }
+
+        #shopSearch:focus { box-shadow: 0 10px 25px rgba(255, 0, 80, 0.2); }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card Styling */
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #eee;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .image-box {
+            width: 100%;
+            height: 220px;
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .product-info h3 { 
+            margin: 0; 
+            font-size: 1.2rem; 
+            color: #111; 
+            height: 2.8rem; 
+            overflow: hidden; 
+        }
+
+        .price { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: var(--primary-color); 
+            margin: 10px 0; 
+        }
+
+        .compatibility-tag {
+            font-size: 0.8rem;
+            color: #777;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .btn-buy {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .product-card:hover .btn-buy { background: var(--primary-color); }
+
+        .back-nav { margin-bottom: 20px; display: block; color: #666; text-decoration: none; font-weight: bold; }
+        .back-nav:hover { color: var(--primary-color); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-info h3 { font-size: 1rem; }
+            .price { font-size: 1.2rem; }
+            .container { padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="store-header">
+    <h1>TechnoHacks Store</h1>
+    <p>Premium LCD Replacements & Parts</p>
+</div>
+
+<div class="container">
+    <a href="index.html" class="back-nav">← Back to Compatibility Tool</a>
+
+    <div class="search-container">
+        <input type="text" id="shopSearch" placeholder="Search for your phone model (e.g. Vivo Y11)...">
+    </div>
+
+    <div class="product-grid" id="productGrid">
+        </div>
+</div>
+
+<script>
+    // YOUR STORE DATA
+    const shopData = [
+        { 
+            model: "Vivo Y11 / Y12 / Y15 LCD", 
+            price: "₱599.00", 
+            image: "https://placehold.co/300x400?text=Vivo+Y11+LCD", 
+            link: "https://vt.tiktok.com/your-vivo-affiliate",
+            compat: "Y11, Y12, Y15, Y17"
+        },
+        { 
+            model: "Realme C21 LCD Full Set", 
+            price: "₱750.00", 
+            image: "https://placehold.co/300x400?text=Realme+C21+LCD", 
+            link: "https://vt.tiktok.com/your-realme-affiliate",
+            compat: "C21, C21Y, C25"
+        },
+        { 
+            model: "Samsung A10s LCD Screen", 
+            price: "₱680.00", 
+            image: "https://placehold.co/300x400?text=Samsung+A10s+LCD", 
+            link: "https://vt.tiktok.com/your-samsung-affiliate",
+            compat: "A10s, M10s"
+        },
+        { 
+            model: "Redmi Note 8 LCD Display", 
+            price: "₱820.00", 
+            image: "https://placehold.co/300x400?text=Redmi+Note+8+LCD", 
+            link: "https://vt.tiktok.com/your-redmi-affiliate",
+            compat: "Note 8, Note 8 (2021)"
+        }
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const search = document.getElementById('shopSearch');
+
+    function renderProducts(products) {
+        if(products.length === 0) {
+            grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>No products found matching your search.</p>";
+            return;
+        }
+
+        grid.innerHTML = products.map(item => `
+            <a href="${item.link}" target="_blank" class="product-card">
+                <div class="image-
