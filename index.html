@@ -13,39 +13,29 @@
         /* Your CSS stays exactly the same */
         * { box-sizing: border-box; }
         body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: #2c3e50 url('bg.png') no-repeat center center fixed; 
-            background-size: cover; 
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
-        .main-wrapper { display: flex; width: 100%; min-height: 100vh; }
-        .sidebar { width: 250px; background: #111111; color: white; padding: 30px 15px; flex-shrink: 0; border-right: 2px solid #1a73e8; }
-        .sidebar h2 { color: #1a73e8; margin-bottom: 5px; }
-        .sidebar p { font-size: 12px; color: #777; margin-bottom: 25px; }
-        .sidebar a { display: block; color: #fff; padding: 12px; text-decoration: none; background: #222; margin-bottom: 10px; border-radius: 8px; font-size: 14px; transition: 0.3s; }
-        .sidebar a:hover { background: #1a73e8; }
-        .content-area { flex-grow: 1; padding: 30px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 900px; background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); height: fit-content; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { color: #1a73e8; margin: 0; }
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        #searchBar { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
-        #clearBtn { padding: 0 20px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 12px; background: #f4f4f4; color: #333; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
-        .model-cell { font-weight: bold; color: #1a73e8; }
-        .lcd-thumb { width: 70px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-        .lcd-thumb:hover { transform: scale(1.1); }
-        @media (max-width: 768px) { .main-wrapper { flex-direction: column; } .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; } .content-area { padding: 10px; } }
-        .no-compat-msg { color: #888; font-style: italic; font-size: 0.9rem; display: block; background: #fdf2f2; padding: 8px; border-radius: 5px; border-left: 3px solid #f44336; }
-        .unique-tag-img { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: #f44336; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
-        .img-container { position: relative; display: inline-block; }
-        /* Add this style for the buy hint */
-        .buy-hint { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); background: #1a73e8; color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-weight: bold; white-space: nowrap; }
-    </style>
+    font-family: 'Segoe UI', sans-serif; 
+    /* Fix filename to .png and ensure it covers the whole screen */
+    background: #2c3e50 url('bg.png') no-repeat center center fixed; 
+    background-size: cover; 
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.container { 
+    width: 100%;
+    max-width: 900px; 
+    /* Changed from 0.95 to 0.85 for more transparency */
+    background: rgba(255, 255, 255, 0.85); 
+    /* Added a backdrop blur to make it look modern and readable */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 25px; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    height: fit-content;
+    }
+</style>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9JLQ5V5"
@@ -146,4 +136,5 @@
 
 </body>
 </html>
+
 
