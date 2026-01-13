@@ -103,31 +103,52 @@
             font-weight: bold;
         }
         
-        /* TABLE FIX FOR NO-SWIPE */
         table { 
             width: 100%; 
             border-collapse: collapse; 
-            table-layout: fixed; /* Forces the table to stay within screen width */
+            table-layout: fixed; 
         } 
 
         th, td { 
             padding: 10px 5px; 
             border-bottom: 1px solid #eee; 
             vertical-align: middle; 
-            word-wrap: break-word; /* Allows text to wrap to next line */
+            word-wrap: break-word; 
             overflow-wrap: break-word;
         }
 
-        /* Column Width Adjustments */
-        .col-photo { width: 70px; }
-        .col-model { width: 100px; }
+        .col-photo { width: 80px; }
+        .col-model { width: 110px; }
         .col-compat { width: auto; }
 
         th { text-align: left; background: #f8f9fa; font-size: 14px; color: #333; }
         
         .model-cell { font-weight: bold; color: #1a73e8; font-size: 14px; }
-        .img-container { width: 60px; }
-        .lcd-thumb { width: 100%; border-radius: 5px; border: 1px solid #ddd; }
+
+        /* --- ZOOM EFFECT SECTION --- */
+        .img-container { 
+            width: 70px; 
+            height: 90px;
+            overflow: hidden; /* Keeps the zoom inside the box */
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            position: relative;
+            background: #fff;
+        }
+
+        .lcd-thumb { 
+            width: 100%; 
+            height: 100%;
+            object-fit: contain; /* Ensures photo isn't distorted */
+            cursor: pointer; 
+            transition: transform 0.4s ease; /* Smooth zoom speed */
+        }
+
+        /* The actual Zoom Trigger */
+        .img-container:hover .lcd-thumb { 
+            transform: scale(1.6); /* Zooms in by 60% */
+        }
+        /* --------------------------- */
 
         .buy-hint, .unique-tag-img {
             display: block;
@@ -151,13 +172,11 @@
                 border-right: none; 
                 padding: 15px;
             }
-            .sidebar p { margin-bottom: 10px; }
             .content-area { padding: 10px; }
             .container { padding: 10px; border-radius: 10px; }
             
-            /* Smaller fonts for mobile to fit better */
-            th, td { font-size: 13px; }
-            .model-cell { font-size: 13px; }
+            /* Disable zoom on mobile to prevent accidental zooming while scrolling */
+            .img-container:hover .lcd-thumb { transform: none; }
         }
     </style>
 </head>
@@ -225,10 +244,10 @@
             return `
                 <tr>
                     <td>
-                        <div class="img-container" onclick="window.open('${item.link !== '#' ? item.link : item.image}', '_blank')">
-                            <img src="${item.image}" class="lcd-thumb" onerror="this.src='https://placehold.co/60x80?text=No+Photo'">
-                            ${isUnique ? '<span class="unique-tag-img">UNIQUE</span>' : '<span class="buy-hint">BUY</span>'}
+                        <div class="img-container">
+                            <img src="${item.image}" class="lcd-thumb" onclick="window.open('${item.link !== '#' ? item.link : item.image}', '_blank')" onerror="this.src='https://placehold.co/70x90?text=No+Photo'">
                         </div>
+                        ${isUnique ? '<span class="unique-tag-img">UNIQUE</span>' : '<span class="buy-hint">BUY</span>'}
                     </td>
                     <td class="model-cell">${item.model}</td>
                     <td style="font-size: 12px; color: #444;">
