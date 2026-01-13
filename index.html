@@ -10,70 +10,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LCD Master Search</title>
     <style>
-        /* Your CSS stays exactly the same */
         * { box-sizing: border-box; }
+        
         body { 
-    font-family: 'Segoe UI', sans-serif; 
-    /* Fix filename to .png and ensure it covers the whole screen */
-    background: #2c3e50 url('bg.png') no-repeat center center fixed; 
-    background-size: cover; 
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-}
+            font-family: 'Segoe UI', sans-serif; 
+            background: #2c3e50 url('bg.png') no-repeat center center fixed; 
+            background-size: cover; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
 
-.container { 
-    width: 100%;
-    max-width: 900px; 
-    /* Changed from 0.95 to 0.85 for more transparency */
-    background: rgba(255, 255, 255, 0.85); 
-    /* Added a backdrop blur to make it look modern and readable */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 25px; 
-    border-radius: 15px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    height: fit-content;
-    }
-</style>
+        /* FLEX WRAPPER FOR SIDEBAR + CONTENT */
+        .main-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR STYLING */
+        .sidebar {
+            width: 250px;
+            background: rgba(17, 17, 17, 0.9); /* Slight transparency */
+            color: white;
+            padding: 30px 15px;
+            flex-shrink: 0;
+            border-right: 2px solid #1a73e8;
+        }
+
+        .sidebar h2 { color: #1a73e8; margin-bottom: 5px; }
+        .sidebar p { font-size: 12px; color: #777; margin-bottom: 25px; }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            padding: 12px;
+            text-decoration: none;
+            background: #222;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover { background: #1a73e8; }
+
+        /* MAIN CONTENT AREA */
+        .content-area {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container { 
+            width: 100%;
+            max-width: 900px; 
+            background: rgba(255, 255, 255, 0.85); /* 0.85 makes bg visible */
+            backdrop-filter: blur(10px); /* Modern blur effect */
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            height: fit-content;
+        }
+
+        /* Table & Typography */
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { color: #1a73e8; margin: 0; }
+        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
+        #searchBar { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
+        #clearBtn { padding: 0 20px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; background: rgba(0,0,0,0.05); color: #333; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        
+        .model-cell { font-weight: bold; color: #1a73e8; }
+        .lcd-thumb { width: 80px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+        .lcd-thumb:hover { transform: scale(1.1); }
+
+        .img-container { position: relative; display: inline-block; text-align: center; }
+        .buy-hint, .unique-tag-img {
+            display: block;
+            background: #1a73e8;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .unique-tag-img { background: #f44336; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; }
+            .content-area { padding: 10px; }
+        }
+    </style>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9JLQ5V5"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
     <div class="main-wrapper">
-    <div class="sidebar">
-        <h2>TechnoHacks</h2>
-        <p>Repair Database v3.0</p>
-        <a href="https://www.facebook.com/albertelena2514" target="_blank">👤 Facebook Page</a>
-        <a href="shop.html">🛒 Order LCD here</a>
-        <a href="https://www.youtube.com/@technohacks2514" target="_blank">▶️ Watch Here </a>
-    </div>
+        <div class="sidebar">
+            <h2>TechnoHacks</h2>
+            <p>Repair Database v3.0</p>
+            <a href="https://www.facebook.com/albertelena2514" target="_blank">👤 Facebook Page</a>
+            <a href="shop.html">🛒 Order LCD here</a>
+            <a href="https://www.youtube.com/@technohacks2514" target="_blank">▶️ Watch Here </a>
+        </div>
 
-    <div class="content-area">
-        <div class="container">
-            <div class="header">
-                <h1>LCD Master Search</h1>
-                <p>Find compatible screens instantly</p>
-            </div>
-            
-            <div class="controls">
-                <input type="text" id="searchBar" placeholder="Search model...">
-                <button id="clearBtn">Clear</button>
-            </div>
+        <div class="content-area">
+            <div class="container">
+                <div class="header">
+                    <h1>LCD Master Search</h1>
+                    <p>Find compatible screens instantly</p>
+                </div>
+                
+                <div class="controls">
+                    <input type="text" id="searchBar" placeholder="Search model...">
+                    <button id="clearBtn">Clear</button>
+                </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Photo</th> 
-                        <th>Model</th>
-                        <th>Compatible With</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody"></tbody>
-            </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photo</th> 
+                            <th>Model</th>
+                            <th>Compatible With</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 <script>
     const lcdData = [
@@ -109,7 +184,7 @@
                     <td class="model-cell">${item.model}</td>
                     <td>
                         ${isUnique 
-                            ? '<span class="no-compat-msg">⚠️ No compatibility with other units (Solo Model)</span>' 
+                            ? '<span style="color:#888; font-style:italic;">⚠️ No compatibility with other units (Solo Model)</span>' 
                             : item.compat}
                     </td>
                 </tr>
@@ -136,5 +211,3 @@
 
 </body>
 </html>
-
-
