@@ -6,6 +6,7 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-K9JLQ5V5');</script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LCD Master Search</title>
@@ -16,174 +17,90 @@
             font-family: 'Segoe UI', sans-serif; 
             background: #2c3e50 url('bg.png') no-repeat center center fixed; 
             background-size: cover; 
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
         }
 
-        .main-wrapper {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
+        .main-wrapper { display: flex; width: 100%; min-height: 100vh; }
 
         .sidebar {
-            width: 260px;
-            background: #111111;
-            color: white;
-            padding: 30px 15px;
-            flex-shrink: 0;
-            border-right: 2px solid #1a73e8;
-            position: sticky;
-            top: 0;
-            height: 100vh;
+            width: 260px; background: #111111; color: white; padding: 30px 15px;
+            flex-shrink: 0; border-right: 2px solid #1a73e8; position: sticky; top: 0; height: 100vh;
         }
 
         .sidebar h2 { color: #1a73e8; margin-bottom: 5px; font-size: 24px; }
-        .sidebar p { font-size: 13px; color: #888; margin-bottom: 30px; }
-
         .sidebar a {
-            display: block;
-            color: #fff;
-            padding: 14px;
-            text-decoration: none;
-            background: #1e1e1e;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            display: block; color: #fff; padding: 14px; text-decoration: none;
+            background: #1e1e1e; margin-bottom: 12px; border-radius: 8px; font-size: 14px;
+            transition: 0.3s;
         }
+        .sidebar a:hover { background: #1a73e8; }
 
-        .sidebar a:hover { background: #1a73e8; transform: translateX(5px); }
-
-        .content-area {
-            flex-grow: 1;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.2);
-        }
+        .content-area { flex-grow: 1; padding: 40px 20px; display: flex; justify-content: center; background: rgba(0, 0, 0, 0.2); }
 
         .container { 
-            width: 100%;
-            max-width: 950px; 
-            background: rgba(255, 255, 255, 0.98); 
-            padding: 25px; 
-            border-radius: 20px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            height: fit-content;
+            width: 100%; max-width: 950px; background: rgba(255, 255, 255, 0.98); 
+            padding: 25px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); height: fit-content;
         }
 
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { color: #1a73e8; margin: 0; font-size: 28px; }
+        .header h1 { color: #1a73e8; text-align: center; font-size: 28px; margin-bottom: 20px; }
 
-        .controls { 
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 20px; 
-        }
+        .controls { display: flex; gap: 8px; margin-bottom: 20px; }
+        #searchBar { flex: 1; padding: 12px; border-radius: 10px; border: 2px solid #eee; outline: none; font-size: 16px; }
+        #clearBtn { padding: 0 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
-        #searchBar { 
-            flex: 1; 
-            padding: 12px; 
-            border-radius: 10px; 
-            border: 2px solid #eee; 
-            outline: none; 
-            font-size: 16px;
-            min-width: 0;
-        }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; } 
+        th, td { padding: 10px 5px; border-bottom: 1px solid #eee; vertical-align: middle; word-wrap: break-word; }
 
-        #clearBtn { 
-            padding: 0 15px; 
-            background: #1a73e8; 
-            color: white; 
-            border: none; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            font-weight: bold;
-        }
-        
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            table-layout: fixed; 
-        } 
-
-        th, td { 
-            padding: 10px 5px; 
-            border-bottom: 1px solid #eee; 
-            vertical-align: middle; 
-            word-wrap: break-word; 
-            overflow-wrap: break-word;
-        }
-
-        .col-photo { width: 80px; }
+        .col-photo { width: 85px; }
         .col-model { width: 110px; }
         .col-compat { width: auto; }
 
         th { text-align: left; background: #f8f9fa; font-size: 14px; color: #333; }
-        
         .model-cell { font-weight: bold; color: #1a73e8; font-size: 14px; }
 
-        /* --- ZOOM EFFECT SECTION --- */
+        /* --- ENHANCED POP-OUT ZOOM --- */
         .img-container { 
-            width: 70px; 
-            height: 90px;
-            overflow: hidden; /* Keeps the zoom inside the box */
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            position: relative;
-            background: #fff;
+            width: 70px; height: 90px; position: relative; cursor: pointer;
         }
 
         .lcd-thumb { 
-            width: 100%; 
-            height: 100%;
-            object-fit: contain; /* Ensures photo isn't distorted */
-            cursor: pointer; 
-            transition: transform 0.4s ease; /* Smooth zoom speed */
+            width: 100%; height: 100%; object-fit: cover; border-radius: 5px; 
+            border: 1px solid #ddd; transition: all 0.3s ease;
         }
 
-        /* The actual Zoom Trigger */
-        .img-container:hover .lcd-thumb { 
-            transform: scale(1.6); /* Zooms in by 60% */
+        /* Pop-out Effect on Laptop */
+        @media (min-width: 851px) {
+            .img-container:hover .lcd-thumb { 
+                position: fixed; /* Pops out of the table */
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%) scale(5); /* Zooms 5x larger to center of screen */
+                z-index: 9999;
+                box-shadow: 0 0 50px rgba(0,0,0,0.8);
+                border: 2px solid white;
+                height: auto; width: 150px; /* Large View Size */
+            }
+            /* Darkens background when hovering image */
+            .img-container:hover::after {
+                content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                background: rgba(0,0,0,0.7); z-index: 9998; pointer-events: none;
+            }
         }
-        /* --------------------------- */
 
         .buy-hint, .unique-tag-img {
-            display: block;
-            background: #1a73e8;
-            color: white;
-            font-size: 9px;
-            padding: 3px;
-            border-radius: 3px;
-            margin-top: 4px;
-            font-weight: bold;
-            text-align: center;
+            display: block; background: #1a73e8; color: white; font-size: 9px;
+            padding: 3px; border-radius: 3px; margin-top: 4px; font-weight: bold; text-align: center;
         }
         .unique-tag-img { background: #d93025; }
 
         @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
-            .sidebar { 
-                width: 100%; 
-                height: auto; 
-                position: relative; 
-                border-right: none; 
-                padding: 15px;
-            }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; padding: 15px; }
             .content-area { padding: 10px; }
             .container { padding: 10px; border-radius: 10px; }
-            
-            /* Disable zoom on mobile to prevent accidental zooming while scrolling */
-            .img-container:hover .lcd-thumb { transform: none; }
         }
     </style>
 </head>
 <body>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K9JLQ5V5"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
     <div class="main-wrapper">
         <div class="sidebar">
             <h2>TechnoHacks</h2>
@@ -195,15 +112,11 @@
 
         <div class="content-area">
             <div class="container">
-                <div class="header">
-                    <h1>LCD Master Search</h1>
-                </div>
-                
+                <div class="header"><h1>LCD Master Search</h1></div>
                 <div class="controls">
                     <input type="text" id="searchBar" placeholder="Search model...">
                     <button id="clearBtn">Clear</button>
                 </div>
-
                 <table>
                     <thead>
                         <tr>
@@ -251,9 +164,7 @@
                     </td>
                     <td class="model-cell">${item.model}</td>
                     <td style="font-size: 12px; color: #444;">
-                        ${isUnique 
-                            ? '<span style="color:#d93025; font-weight:500;">⚠️ Solo Model</span>' 
-                            : item.compat}
+                        ${isUnique ? '<span style="color:#d93025; font-weight:500;">⚠️ Solo Model</span>' : item.compat}
                     </td>
                 </tr>
             `;
@@ -263,19 +174,13 @@
     searchBar.addEventListener('input', () => {
         const query = searchBar.value.toLowerCase().trim();
         const filtered = lcdData.filter(item => 
-            item.model.toLowerCase().includes(query) || 
-            item.compat.toLowerCase().includes(query)
+            item.model.toLowerCase().includes(query) || item.compat.toLowerCase().includes(query)
         );
         renderTable(filtered);
     });
 
-    clearBtn.addEventListener('click', () => {
-        searchBar.value = '';
-        renderTable(lcdData);
-    });
-
+    clearBtn.addEventListener('click', () => { searchBar.value = ''; renderTable(lcdData); });
     renderTable(lcdData);
 </script>
-
 </body>
 </html>
