@@ -62,80 +62,86 @@
             display: flex;
             justify-content: center;
             background: rgba(0, 0, 0, 0.2);
-            overflow-x: hidden;
         }
 
         .container { 
             width: 100%;
             max-width: 950px; 
             background: rgba(255, 255, 255, 0.98); 
-            padding: 30px; 
+            padding: 25px; 
             border-radius: 20px; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             height: fit-content;
         }
 
         .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { color: #1a73e8; margin: 0; font-size: 32px; }
-        .header p { color: #555; font-size: 16px; }
+        .header h1 { color: #1a73e8; margin: 0; font-size: 28px; }
 
-        /* Controls: Flex-nowrap keeps button on the side */
         .controls { 
             display: flex; 
             gap: 8px; 
-            margin-bottom: 25px; 
-            width: 100%;
+            margin-bottom: 20px; 
         }
         
         #searchBar { 
             flex: 1; 
-            padding: 15px; 
-            border-radius: 12px; 
+            padding: 12px; 
+            border-radius: 10px; 
             border: 2px solid #eee; 
             outline: none; 
             font-size: 16px;
-            min-width: 0; /* Important for flex child shrink */
+            min-width: 0;
         }
 
         #clearBtn { 
-            padding: 0 20px; 
+            padding: 0 15px; 
             background: #1a73e8; 
             color: white; 
             border: none; 
-            border-radius: 12px; 
+            border-radius: 10px; 
             cursor: pointer; 
             font-weight: bold;
-            white-space: nowrap; /* Prevents text from breaking */
         }
         
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
+        /* TABLE FIX FOR NO-SWIPE */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            table-layout: fixed; /* Forces the table to stay within screen width */
+        } 
+
+        th, td { 
+            padding: 10px 5px; 
+            border-bottom: 1px solid #eee; 
+            vertical-align: middle; 
+            word-wrap: break-word; /* Allows text to wrap to next line */
+            overflow-wrap: break-word;
         }
 
-        table { width: 100%; border-collapse: collapse; min-width: 500px; } 
-        th { text-align: left; padding: 15px; background: #f8f9fa; border-bottom: 2px solid #eee; }
-        td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        /* Column Width Adjustments */
+        .col-photo { width: 70px; }
+        .col-model { width: 100px; }
+        .col-compat { width: auto; }
+
+        th { text-align: left; background: #f8f9fa; font-size: 14px; color: #333; }
         
-        .model-cell { font-weight: bold; color: #1a73e8; font-size: 16px; }
-        .img-container { position: relative; display: inline-block; width: 85px; }
-        .lcd-thumb { width: 100%; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; }
+        .model-cell { font-weight: bold; color: #1a73e8; font-size: 14px; }
+        .img-container { width: 60px; }
+        .lcd-thumb { width: 100%; border-radius: 5px; border: 1px solid #ddd; }
 
         .buy-hint, .unique-tag-img {
             display: block;
             background: #1a73e8;
             color: white;
-            font-size: 10px;
-            padding: 4px;
-            border-radius: 4px;
-            margin-top: 6px;
+            font-size: 9px;
+            padding: 3px;
+            border-radius: 3px;
+            margin-top: 4px;
             font-weight: bold;
             text-align: center;
         }
         .unique-tag-img { background: #d93025; }
 
-        /* MOBILE FIXES */
         @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
             .sidebar { 
@@ -143,19 +149,15 @@
                 height: auto; 
                 position: relative; 
                 border-right: none; 
-                border-bottom: 3px solid #1a73e8; 
-                padding: 20px;
+                padding: 15px;
             }
-            .sidebar h2 { font-size: 20px; }
-            .sidebar p { margin-bottom: 15px; }
+            .sidebar p { margin-bottom: 10px; }
             .content-area { padding: 10px; }
-            .container { padding: 15px; border-radius: 10px; }
+            .container { padding: 10px; border-radius: 10px; }
             
-            /* Keeping button on side but slightly smaller padding */
-            #searchBar { padding: 12px; }
-            #clearBtn { padding: 0 15px; font-size: 14px; }
-            
-            .header h1 { font-size: 24px; }
+            /* Smaller fonts for mobile to fit better */
+            th, td { font-size: 13px; }
+            .model-cell { font-size: 13px; }
         }
     </style>
 </head>
@@ -176,7 +178,6 @@
             <div class="container">
                 <div class="header">
                     <h1>LCD Master Search</h1>
-                    <p>Find compatible screens instantly</p>
                 </div>
                 
                 <div class="controls">
@@ -184,18 +185,16 @@
                     <button id="clearBtn">Clear</button>
                 </div>
 
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Photo</th> 
-                                <th>Model</th>
-                                <th>Compatible With</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-photo">Photo</th> 
+                            <th class="col-model">Model</th>
+                            <th class="col-compat">Compatible With</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -218,7 +217,7 @@
 
     function renderTable(data) {
         if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#777; font-style:italic;">No matches found.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px; color:#777;">No matches.</td></tr>';
             return;
         }
         tableBody.innerHTML = data.map(item => {
@@ -227,15 +226,15 @@
                 <tr>
                     <td>
                         <div class="img-container" onclick="window.open('${item.link !== '#' ? item.link : item.image}', '_blank')">
-                            <img src="${item.image}" class="lcd-thumb" onerror="this.src='https://placehold.co/80x100?text=No+Photo'">
-                            ${isUnique ? '<span class="unique-tag-img">UNIQUE UNIT</span>' : '<span class="buy-hint">🛒 BUY NOW</span>'}
+                            <img src="${item.image}" class="lcd-thumb" onerror="this.src='https://placehold.co/60x80?text=No+Photo'">
+                            ${isUnique ? '<span class="unique-tag-img">UNIQUE</span>' : '<span class="buy-hint">BUY</span>'}
                         </div>
                     </td>
                     <td class="model-cell">${item.model}</td>
-                    <td>
+                    <td style="font-size: 12px; color: #444;">
                         ${isUnique 
-                            ? '<span style="color:#d93025; font-size:13px; font-weight:500;">⚠️ Solo Model</span>' 
-                            : '<span style="color:#444; line-height:1.4;">' + item.compat + '</span>'}
+                            ? '<span style="color:#d93025; font-weight:500;">⚠️ Solo Model</span>' 
+                            : item.compat}
                     </td>
                 </tr>
             `;
