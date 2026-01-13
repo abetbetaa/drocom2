@@ -21,6 +21,7 @@
             min-height: 100vh;
         }
 
+        /* Essential Layout Fix */
         .main-wrapper {
             display: flex;
             width: 100%;
@@ -28,79 +29,109 @@
         }
 
         .sidebar {
-            width: 250px;
-            background: #111111; /* Reverted to solid black */
+            width: 260px;
+            background: #111111;
             color: white;
             padding: 30px 15px;
             flex-shrink: 0;
             border-right: 2px solid #1a73e8;
+            position: sticky;
+            top: 0;
+            height: 100vh;
         }
 
-        .sidebar h2 { color: #1a73e8; margin-bottom: 5px; }
-        .sidebar p { font-size: 12px; color: #777; margin-bottom: 25px; }
+        .sidebar h2 { color: #1a73e8; margin-bottom: 5px; font-size: 24px; }
+        .sidebar p { font-size: 13px; color: #888; margin-bottom: 30px; }
 
         .sidebar a {
             display: block;
             color: #fff;
-            padding: 12px;
+            padding: 14px;
             text-decoration: none;
-            background: #222;
-            margin-bottom: 10px;
+            background: #1e1e1e;
+            margin-bottom: 12px;
             border-radius: 8px;
             font-size: 14px;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .sidebar a:hover { background: #1a73e8; }
+        .sidebar a:hover { background: #1a73e8; transform: translateX(5px); }
 
         .content-area {
             flex-grow: 1;
-            padding: 30px;
+            padding: 40px 20px;
             display: flex;
             justify-content: center;
+            background: rgba(0, 0, 0, 0.2); /* Adds contrast for the background image */
         }
 
         .container { 
             width: 100%;
-            max-width: 900px; 
-            background: rgba(255, 255, 255, 0.95); /* Reverted to solid white */
-            padding: 25px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 950px; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 30px; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             height: fit-content;
         }
 
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { color: #1a73e8; margin: 0; }
-        .controls { display: flex; gap: 10px; margin-bottom: 20px; }
-        #searchBar { flex: 1; padding: 15px; border-radius: 10px; border: 1px solid #ddd; outline: none; }
-        #clearBtn { padding: 0 20px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 12px; background: #f4f4f4; color: #333; }
-        td { padding: 12px; border-bottom: 1px solid #eee; }
-        
-        .model-cell { font-weight: bold; color: #1a73e8; }
-        .lcd-thumb { width: 80px; border-radius: 5px; cursor: pointer; transition: 0.2s; }
-        .lcd-thumb:hover { transform: scale(1.1); }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { color: #1a73e8; margin: 0; font-size: 32px; }
+        .header p { color: #555; font-size: 16px; }
 
-        .img-container { position: relative; display: inline-block; text-align: center; }
+        .controls { display: flex; gap: 12px; margin-bottom: 25px; }
+        
+        #searchBar { 
+            flex: 1; 
+            padding: 15px; 
+            border-radius: 12px; 
+            border: 2px solid #eee; 
+            outline: none; 
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        #searchBar:focus { border-color: #1a73e8; }
+
+        #clearBtn { 
+            padding: 0 25px; 
+            background: #1a73e8; 
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        #clearBtn:hover { background: #1557b0; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 15px; background: #f8f9fa; color: #333; font-weight: 600; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        
+        .model-cell { font-weight: bold; color: #1a73e8; font-size: 16px; }
+        
+        .img-container { position: relative; display: inline-block; width: 85px; }
+        .lcd-thumb { width: 100%; border-radius: 8px; cursor: pointer; border: 1px solid #ddd; }
+
         .buy-hint, .unique-tag-img {
             display: block;
             background: #1a73e8;
             color: white;
             font-size: 10px;
-            padding: 2px 5px;
+            padding: 4px;
             border-radius: 4px;
-            margin-top: 5px;
+            margin-top: 6px;
             font-weight: bold;
+            text-align: center;
         }
-        .unique-tag-img { background: #f44336; }
+        .unique-tag-img { background: #d93025; }
 
-        @media (max-width: 768px) {
+        /* Responsive */
+        @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 2px solid #1a73e8; }
-            .content-area { padding: 10px; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 3px solid #1a73e8; }
+            .content-area { padding: 15px; }
+            .container { padding: 15px; }
         }
     </style>
 </head>
@@ -125,7 +156,7 @@
                 </div>
                 
                 <div class="controls">
-                    <input type="text" id="searchBar" placeholder="Search model...">
+                    <input type="text" id="searchBar" placeholder="Search phone model (e.g. Realme C21)...">
                     <button id="clearBtn">Clear</button>
                 </div>
 
@@ -161,7 +192,7 @@
 
     function renderTable(data) {
         if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:40px; color:#999;">No matches found.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:50px; color:#777; font-style:italic;">No matches found for your search.</td></tr>';
             return;
         }
         tableBody.innerHTML = data.map(item => {
@@ -169,16 +200,16 @@
             return `
                 <tr>
                     <td>
-                        <div class="img-container" onclick="window.open('${item.link || item.image || '#'}', '_blank')">
-                            <img src="${item.image || 'https://placehold.co/80x100?text=No+Photo'}" class="lcd-thumb">
+                        <div class="img-container" onclick="window.open('${item.link !== '#' ? item.link : item.image}', '_blank')">
+                            <img src="${item.image}" class="lcd-thumb" onerror="this.src='https://placehold.co/80x100?text=No+Photo'">
                             ${isUnique ? '<span class="unique-tag-img">UNIQUE UNIT</span>' : '<span class="buy-hint">🛒 BUY NOW</span>'}
                         </div>
                     </td>
                     <td class="model-cell">${item.model}</td>
                     <td>
                         ${isUnique 
-                            ? '<span style="color:#888; font-style:italic;">⚠️ No compatibility with other units (Solo Model)</span>' 
-                            : item.compat}
+                            ? '<span style="color:#d93025; font-size:13px; font-weight:500;">⚠️ Solo Model (No common compatibility)</span>' 
+                            : '<span style="color:#444; line-height:1.4;">' + item.compat + '</span>'}
                     </td>
                 </tr>
             `;
