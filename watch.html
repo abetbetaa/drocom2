@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechnoHacks - Video Tutorials</title>
     <style>
-        /* Reusing your existing styles for consistency */
         * { box-sizing: border-box; }
         body { 
             font-family: 'Segoe UI', sans-serif; 
@@ -34,12 +33,16 @@
         }
         .header h1 { color: #1a73e8; text-align: center; font-size: 28px; margin-bottom: 20px; }
 
+        /* Search Controls (Same as index.html for consistency) */
+        .controls { display: flex; gap: 8px; margin-bottom: 25px; }
+        #searchBar { flex: 1; padding: 12px; border-radius: 10px; border: 2px solid #eee; outline: none; font-size: 16px; }
+        #clearBtn { padding: 0 15px; background: #1a73e8; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+
         /* Video Grid Styles */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
         .video-card {
             background: #f9f9f9;
@@ -55,35 +58,20 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .video-thumbnail {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            background: #000;
-        }
+        .video-thumbnail { width: 100%; height: 160px; object-fit: cover; background: #000; }
         .video-info { padding: 15px; }
         .video-title { 
-            font-size: 16px; 
-            font-weight: bold; 
-            color: #333; 
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 16px; font-weight: bold; color: #333; margin-bottom: 8px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
         .video-tag {
-            font-size: 11px;
-            background: #1a73e8;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
+            font-size: 11px; background: #1a73e8; color: white; padding: 2px 8px; border-radius: 4px; text-transform: uppercase;
         }
 
         @media (max-width: 850px) {
             .main-wrapper { flex-direction: column; }
             .sidebar { width: 100%; height: auto; position: relative; border-right: none; padding: 15px; }
+            .content-area { padding: 15px; }
         }
     </style>
 </head>
@@ -102,8 +90,12 @@
             <div class="container">
                 <div class="header"><h1>Video Tutorials</h1></div>
                 
-                <div class="video-grid" id="videoGrid">
-                    </div>
+                <div class="controls">
+                    <input type="text" id="searchBar" placeholder="Search tutorials (e.g. OPPO, FRP, Realme)...">
+                    <button id="clearBtn">Clear</button>
+                </div>
+                
+                <div class="video-grid" id="videoGrid"></div>
             </div>
         </div>
     </div>
@@ -113,30 +105,33 @@
         { 
             title: "How to replace Realme C21 LCD", 
             youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID_HERE", 
-            // Replace VIDEO_ID_HERE with the actual ID from your Realme video
             thumbnail: "https://img.youtube.com/vi/VIDEO_ID_HERE/mqdefault.jpg",
             tag: "Realme"
         },
         { 
             title: "Oppo reno5 4g FRP/Google account remove", 
             youtubeUrl: "https://www.youtube.com/watch?v=96sp7x5AA6A", 
-            // The ID for this video is 96sp7x5AA6A
             thumbnail: "https://img.youtube.com/vi/96sp7x5AA6A/mqdefault.jpg",
             tag: "OPPO"
         },
         { 
             title: "oppo reno4 FRP/Google account remove", 
             youtubeUrl: "https://www.youtube.com/watch?v=cI0_eJTq6b4", 
-            // The ID for this video is cI0_eJTq6b4
             thumbnail: "https://img.youtube.com/vi/cI0_eJTq6b4/mqdefault.jpg",
             tag: "OPPO"
         }
     ];
 
     const videoGrid = document.getElementById('videoGrid');
+    const searchBar = document.getElementById('searchBar');
+    const clearBtn = document.getElementById('clearBtn');
 
-    function renderVideos() {
-        videoGrid.innerHTML = videoData.map(video => `
+    function renderVideos(data) {
+        if (data.length === 0) {
+            videoGrid.innerHTML = '<p style="text-align:center; grid-column: 1/-1; padding: 40px; color: #777;">No videos found.</p>';
+            return;
+        }
+        videoGrid.innerHTML = data.map(video => `
             <a href="${video.youtubeUrl}" target="_blank" class="video-card">
                 <img src="${video.thumbnail}" class="video-thumbnail" onerror="this.src='https://placehold.co/280x160?text=TechnoHacks+Video'">
                 <div class="video-info">
@@ -148,10 +143,25 @@
         `).join('');
     }
 
-    renderVideos();
+    // Live Search Logic
+    searchBar.addEventListener('input', () => {
+        const query = searchBar.value.toLowerCase().trim();
+        const filtered = videoData.filter(video => 
+            video.title.toLowerCase().includes(query) || 
+            video.tag.toLowerCase().includes(query)
+        );
+        renderVideos(filtered);
+    });
+
+    // Clear Button Logic
+    clearBtn.addEventListener('click', () => {
+        searchBar.value = '';
+        renderVideos(videoData);
+        searchBar.focus();
+    });
+
+    // Initial load
+    renderVideos(videoData);
 </script>
 </body>
-
 </html>
-
-
