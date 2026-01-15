@@ -147,6 +147,49 @@
             .price { font-size: 1.2rem; }
             .container { padding: 10px; }
         }
+        /* Container for the two buttons */
+.shop-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: auto; /* Pushes buttons to the bottom of the card */
+}
+
+.btn-buy {
+    flex: 1; /* Makes both buttons equal width */
+    text-align: center;
+    padding: 10px 5px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+/* TikTok Button Style */
+.btn-buy.tiktok {
+    background: #000;
+    color: white;
+    border: 1px solid #000;
+}
+.btn-buy.tiktok:hover {
+    background: #ff0050; /* TikTok Pink */
+    border-color: #ff0050;
+}
+
+/* Shopee Button Style */
+.btn-buy.shopee {
+    background: #ee4d2d; /* Shopee Orange */
+    color: white;
+    border: 1px solid #ee4d2d;
+}
+.btn-buy.shopee:hover {
+    background: #ff5722;
+    box-shadow: 0 4px 8px rgba(238, 77, 45, 0.3);
+}
+
+/* Remove the hover effect on the whole card that changed the button color before */
+.product-card:hover .btn-buy { background: inherit; }
     </style>
 </head>
 <body>
@@ -227,3 +270,4 @@
 
     renderProducts(shopData);
 </script>
+
