@@ -168,35 +168,23 @@
 </div>
 
 <script>
-    // YOUR STORE DATA
+    // UPDATED STORE DATA WITH TWO LINKS
     const shopData = [
         { 
             model: "Vivo Y11 / Y12 / Y15 LCD", 
             price: "₱599.00", 
             image: "https://placehold.co/300x400?text=Vivo+Y11+LCD", 
-            link: "https://vt.tiktok.com/your-vivo-affiliate",
+            tiktokLink: "https://vt.tiktok.com/your-tiktok-link",
+            shopeeLink: "https://shopee.ph/your-shopee-link",
             compat: "Y11, Y12, Y15, Y17"
         },
         { 
             model: "Realme C21 LCD Full Set", 
             price: "₱750.00", 
             image: "https://placehold.co/300x400?text=Realme+C21+LCD", 
-            link: "https://vt.tiktok.com/your-realme-affiliate",
+            tiktokLink: "https://vt.tiktok.com/your-tiktok-link",
+            shopeeLink: "https://shopee.ph/your-shopee-link",
             compat: "C21, C21Y, C25"
-        },
-        { 
-            model: "Samsung A10s LCD Screen", 
-            price: "₱680.00", 
-            image: "https://placehold.co/300x400?text=Samsung+A10s+LCD", 
-            link: "https://vt.tiktok.com/your-samsung-affiliate",
-            compat: "A10s, M10s"
-        },
-        { 
-            model: "Redmi Note 8 LCD Display", 
-            price: "₱820.00", 
-            image: "https://placehold.co/300x400?text=Redmi+Note+8+LCD", 
-            link: "https://vt.tiktok.com/your-redmi-affiliate",
-            compat: "Note 8, Note 8 (2021)"
         }
     ];
 
@@ -205,10 +193,37 @@
 
     function renderProducts(products) {
         if(products.length === 0) {
-            grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>No products found matching your search.</p>";
+            grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 50px; color: #777;'>No products found.</p>";
             return;
         }
 
         grid.innerHTML = products.map(item => `
-            <a href="${item.link}" target="_blank" class="product-card">
-                <div class="image-
+            <div class="product-card">
+                <div class="image-box">
+                    <img src="${item.image}" alt="${item.model}" onerror="this.src='https://placehold.co/300x400?text=No+Image'">
+                </div>
+                <div class="product-info">
+                    <h3>${item.model}</h3>
+                    <div class="price">${item.price}</div>
+                    <div class="compatibility-tag">Fits: ${item.compat}</div>
+                    
+                    <div class="shop-buttons">
+                        <a href="${item.tiktokLink}" target="_blank" class="btn-buy tiktok">TikTok Shop</a>
+                        <a href="${item.shopeeLink}" target="_blank" class="btn-buy shopee">Shopee PH</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    search.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        const filtered = shopData.filter(item => 
+            item.model.toLowerCase().includes(term) || 
+            item.compat.toLowerCase().includes(term)
+        );
+        renderProducts(filtered);
+    });
+
+    renderProducts(shopData);
+</script>
