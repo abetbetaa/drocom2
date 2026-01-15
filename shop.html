@@ -6,8 +6,7 @@
     <title>TechnoHacks Mobile Store</title>
     <style>
         :root {
-            --primary-color: #ff0050; /* TikTok Pink */
-            --secondary-color: #25f4ee; /* TikTok Cyan */
+            --primary-color: #ff0050; 
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
             --shopee-orange: #ee4d2d;
@@ -19,7 +18,6 @@
             margin: 0; padding: 0; color: #333;
         }
 
-        /* Store Header */
         .store-header {
             background: #121212;
             color: white;
@@ -28,40 +26,21 @@
             border-bottom: 4px solid var(--primary-color);
         }
 
-        .store-header h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
-        .store-header p { opacity: 0.8; margin-top: 10px; }
-
+        .store-header h1 { margin: 0; font-size: 2.5rem; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        /* Modern Search Bar */
-        .search-container {
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            margin-bottom: 30px;
-        }
-
+        .search-container { position: sticky; top: 10px; z-index: 100; margin-bottom: 30px; }
         #shopSearch {
-            width: 100%;
-            padding: 20px 25px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            border: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            outline: none;
-            transition: 0.3s;
+            width: 100%; padding: 20px 25px; font-size: 1.1rem;
+            border-radius: 50px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); outline: none;
         }
 
-        #shopSearch:focus { box-shadow: 0 10px 25px rgba(255, 0, 80, 0.2); }
-
-        /* Product Grid */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
 
-        /* Product Card Styling */
         .product-card {
             background: var(--card-bg);
             border-radius: 20px;
@@ -73,76 +52,25 @@
             border: 1px solid #eee;
         }
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        .image-box {
-            width: 100%;
-            height: 220px;
-            background: #f9f9f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        .image-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+        .image-box { width: 100%; height: 220px; background: #f9f9f9; display: flex; align-items: center; justify-content: center; padding: 10px; }
+        .image-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        
-        .product-info h3 { 
-            margin: 0; font-size: 1.1rem; color: #111; 
-            height: 2.8rem; overflow: hidden; 
-        }
+        .product-info h3 { margin: 0; font-size: 1.1rem; height: 2.8rem; overflow: hidden; }
+        .price { font-size: 1.5rem; font-weight: 800; color: var(--primary-color); margin: 10px 0; }
+        .compatibility-tag { font-size: 0.8rem; color: #777; background: #f0f0f0; padding: 4px 10px; border-radius: 5px; margin-bottom: 15px; }
 
-        .price { 
-            font-size: 1.5rem; font-weight: 800; color: var(--primary-color); 
-            margin: 10px 0; 
-        }
-
-        .compatibility-tag {
-            font-size: 0.8rem; color: #777; background: #f0f0f0;
-            padding: 4px 10px; border-radius: 5px; margin-bottom: 15px;
-        }
-
-        /* Buttons Setup */
-        .shop-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: auto;
-        }
-
+        .shop-buttons { display: flex; gap: 10px; margin-top: auto; }
         .btn-buy {
-            flex: 1;
-            text-align: center;
-            padding: 12px 5px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.3s;
+            flex: 1; text-align: center; padding: 12px 5px; border-radius: 10px;
+            font-size: 0.75rem; font-weight: bold; text-decoration: none; color: white; transition: 0.3s;
         }
-
-        .btn-buy.tiktok { background: #000; color: white; }
-        .btn-buy.tiktok:hover { background: var(--primary-color); }
-
-        .btn-buy.shopee { background: var(--shopee-orange); color: white; }
-        .btn-buy.shopee:hover { background: #ff5722; }
-
+        .tiktok { background: #000; }
+        .shopee { background: var(--shopee-orange); }
         .back-nav { margin-bottom: 20px; display: block; color: #666; text-decoration: none; font-weight: bold; }
 
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .product-info h3 { font-size: 0.9rem; }
-            .price { font-size: 1.1rem; }
-            .btn-buy { font-size: 0.65rem; padding: 10px 2px; }
         }
     </style>
 </head>
@@ -155,71 +83,76 @@
 
 <div class="container">
     <a href="index.html" class="back-nav">← Back to Compatibility Tool</a>
-
     <div class="search-container">
-        <input type="text" id="shopSearch" placeholder="Search for your phone model (e.g. Vivo Y11)...">
+        <input type="text" id="shopSearch" placeholder="Search for your phone model...">
     </div>
-
-    <div class="product-grid" id="productGrid"></div>
+    <div class="product-grid" id="productGrid">
+        </div>
 </div>
 
 <script>
-    const shopData = [
-        { 
-            model: "Vivo Y11 / Y12 / Y15 LCD", 
-            price: "₱599.00", 
-            image: "https://placehold.co/300x400?text=Vivo+Y11+LCD", 
-            tiktokLink: "https://vt.tiktok.com/your-tiktok-link",
-            shopeeLink: "https://shopee.ph/your-shopee-link",
-            compat: "Y11, Y12, Y15, Y17"
-        },
-        { 
-            model: "Realme C21 LCD Full Set", 
-            price: "₱750.00", 
-            image: "https://placehold.co/300x400?text=Realme+C21+LCD", 
-            tiktokLink: "https://vt.tiktok.com/your-tiktok-link",
-            shopeeLink: "https://shopee.ph/your-shopee-link",
-            compat: "C21, C21Y, C25"
-        }
-    ];
+    // Wrap everything in an event listener to ensure HTML is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        const shopData = [
+            { 
+                model: "Vivo Y11 / Y12 / Y15 LCD", 
+                price: "₱599.00", 
+                image: "https://placehold.co/300x400?text=Vivo+Y11+LCD", 
+                tiktokLink: "#",
+                shopeeLink: "#",
+                compat: "Y11, Y12, Y15, Y17"
+            },
+            { 
+                model: "Realme C21 LCD Full Set", 
+                price: "₱750.00", 
+                image: "https://placehold.co/300x400?text=Realme+C21+LCD", 
+                tiktokLink: "#",
+                shopeeLink: "#",
+                compat: "C21, C21Y, C25"
+            }
+        ];
 
-    const grid = document.getElementById('productGrid');
-    const search = document.getElementById('shopSearch');
+        const grid = document.getElementById('productGrid');
+        const search = document.getElementById('shopSearch');
 
-    function renderProducts(products) {
-        if(products.length === 0) {
-            grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 50px; color: #777;'>No products found.</p>";
-            return;
-        }
+        function renderProducts(products) {
+            if(!grid) return; // Safety check
+            
+            if(products.length === 0) {
+                grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; padding: 50px;'>No products found.</p>";
+                return;
+            }
 
-        grid.innerHTML = products.map(item => `
-            <div class="product-card">
-                <div class="image-box">
-                    <img src="${item.image}" alt="${item.model}" onerror="this.src='https://placehold.co/300x400?text=No+Image'">
-                </div>
-                <div class="product-info">
-                    <h3>${item.model}</h3>
-                    <div class="price">${item.price}</div>
-                    <div class="compatibility-tag">Fits: ${item.compat}</div>
-                    <div class="shop-buttons">
-                        <a href="${item.tiktokLink}" target="_blank" class="btn-buy tiktok">TikTok</a>
-                        <a href="${item.shopeeLink}" target="_blank" class="btn-buy shopee">Shopee</a>
+            grid.innerHTML = products.map(item => `
+                <div class="product-card">
+                    <div class="image-box">
+                        <img src="${item.image}" alt="${item.model}" onerror="this.src='https://placehold.co/300x400?text=No+Image'">
+                    </div>
+                    <div class="product-info">
+                        <h3>${item.model}</h3>
+                        <div class="price">${item.price}</div>
+                        <div class="compatibility-tag">Fits: ${item.compat}</div>
+                        <div class="shop-buttons">
+                            <a href="${item.tiktokLink}" target="_blank" class="btn-buy tiktok">TikTok</a>
+                            <a href="${item.shopeeLink}" target="_blank" class="btn-buy shopee">Shopee</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
-    }
+            `).join('');
+        }
 
-    search.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase().trim();
-        const filtered = shopData.filter(item => 
-            item.model.toLowerCase().includes(term) || 
-            item.compat.toLowerCase().includes(term)
-        );
-        renderProducts(filtered);
+        search.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const filtered = shopData.filter(item => 
+                item.model.toLowerCase().includes(term) || 
+                item.compat.toLowerCase().includes(term)
+            );
+            renderProducts(filtered);
+        });
+
+        // Initial call to display items
+        renderProducts(shopData);
     });
-
-    renderProducts(shopData);
 </script>
 
 </body>
