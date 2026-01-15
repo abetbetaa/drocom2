@@ -109,24 +109,26 @@
     </div>
 
 <script>
-    // ADD YOUR YOUTUBE VIDEOS HERE
     const videoData = [
         { 
             title: "How to replace Realme C21 LCD", 
-            youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID_1", 
-            thumbnail: "https://img.youtube.com/vi/VIDEO_ID_1/mqdefault.jpg",
+            youtubeUrl: "https://www.youtube.com/watch?v=VIDEO_ID_HERE", 
+            // Replace VIDEO_ID_HERE with the actual ID from your Realme video
+            thumbnail: "https://img.youtube.com/vi/VIDEO_ID_HERE/mqdefault.jpg",
             tag: "Realme"
         },
         { 
             title: "Oppo reno5 4g FRP/Google account remove", 
-            youtubeUrl: "https://www.youtube.com/watch?v=96sp7x5AA6A&t=2s", 
-            thumbnail: "https://img.youtube.com/vi/VIDEO_ID_2/reno54gfrp.jpg",
+            youtubeUrl: "https://www.youtube.com/watch?v=96sp7x5AA6A", 
+            // The ID for this video is 96sp7x5AA6A
+            thumbnail: "https://img.youtube.com/vi/96sp7x5AA6A/mqdefault.jpg",
             tag: "OPPO"
         },
         { 
             title: "oppo reno4 FRP/Google account remove", 
             youtubeUrl: "https://www.youtube.com/watch?v=cI0_eJTq6b4", 
-            thumbnail: "https://img.youtube.com/vi/VIDEO_ID_3/reno4frp.png",
+            // The ID for this video is cI0_eJTq6b4
+            thumbnail: "https://img.youtube.com/vi/cI0_eJTq6b4/mqdefault.jpg",
             tag: "OPPO"
         }
     ];
@@ -136,7 +138,7 @@
     function renderVideos() {
         videoGrid.innerHTML = videoData.map(video => `
             <a href="${video.youtubeUrl}" target="_blank" class="video-card">
-                <img src="${video.thumbnail}" class="video-thumbnail" alt="thumbnail">
+                <img src="${video.thumbnail}" class="video-thumbnail" onerror="this.src='https://placehold.co/280x160?text=TechnoHacks+Video'">
                 <div class="video-info">
                     <span class="video-tag">${video.tag}</span>
                     <div class="video-title">${video.title}</div>
@@ -151,4 +153,5 @@
 </body>
 
 </html>
+
 
